@@ -1,16 +1,10 @@
 # IBMYes
 
-**测速节点已经停用，无法测试**
-
-**自动重启可能失效，IBM的API节点似乎失效**
-
-**本项目初衷是想学习CI/CD以及容器的使用，任何与此无关的问题将不做回复。**
-
 本项目包括3部分
 
 1. IBM Cloud Fonudray搭建应用
 2. 利用Github的Actions 每周重启 IBM Cloud Fonudray
-3. ~~Cloudflare 高速节点中转~~
+3. Cloudflare 高速节点中转~~
 
 # 使用IBM Cloud Fonudray搭建V2Ray
 
@@ -34,7 +28,7 @@
 
 ![image-20200615193202810](img/README/image-20200615193202810.png)
 
-区域必须达拉斯，只有那里有免费的。
+区域必须达拉斯，只有那里有免费的。不一定必须选Go，其他php,python等跑得动的都可选，自测python启动运行较快。
 
 ![image-20200615193340241](img/README/image-20200615193340241.png)
 
@@ -47,7 +41,7 @@
 打开命令行，右上角选择相应的地区（Dallas），粘贴一键安装脚本：
 
 ```shell
-wget --no-check-certificate -O install.sh https://raw.githubusercontent.com/CCChieh/IBMYes/master/install.sh && chmod +x install.sh  && ./install.sh
+wget --no-check-certificate -O install.sh https://raw.githubusercontent.com/Davidlasky/IBMYes/master/install.sh && chmod +x install.sh  && ./install.sh
 ```
 
 ![image-20200615210944753](img/README/image-20200615210944753.png)
@@ -70,7 +64,11 @@ URL后加上生成的WebSocket路径，看到`Bad Request`便成功了
 
 这里请记下你的域名
 
-把完成安装后输出的配置链接复制到你的v2rayN或v2rayNg中，修改地址为你的应用的域名（前面我们`Bad Request`那个网页的域名。
+把完成安装后输出的配置链接复制到你的v2rayN或v2rayNg中，修改地址为你的应用的域名（前面我们`Bad Request`那个网页的域名)
+
+
+
+务必记得清除路径（path）中默认生成的字符串，不然可能连不上网
 
 ![image-20200615212537944](img/README/image-20200615212537944.png)
 
@@ -100,7 +98,7 @@ RESOURSE_ID // 资源组ID
 进入命令行先执行
 
 ```shell
-ibmcloud login
+ibmcloud login -u youremail -p yourpassword
 ```
 
 输入邮箱和密码。
@@ -135,7 +133,7 @@ ibmcloud resource groups
 现在返回github，到本项目
 
 ```
-https://github.com/CCChieh/IBMYes
+https://github.com/Davidlasky/IBMYes
 ```
 
 ![image-20200615184239713](img/README/image-20200615184239713.png)
@@ -246,7 +244,7 @@ fetch(request)
 
 现在已经使用了cloudflare的代理。
 
-下面我们将筛选cloudflare的高速节点。
+下面我们将筛选cloudflare的高速节点（fping自动查找最优cf节点方法貌似已失效，相关作者已删库，本文原作者被人肉，请自行查看上述小俊博客或者谷歌寻找ip）
 
 克隆本项目到你的电脑上。
 
@@ -259,6 +257,8 @@ fetch(request)
 在客户端把地址换成ip，伪装域名换成我们cloudflare的workers的域名即可
 
 ![image-20200615215820188](img/README/image-20200615215820188.png)
+
+（以下方法推荐使用）
 
 如果不方便用电脑优选ip也可以把地址设为`cloudflare.com`或`icook.tw`,这两个一个cloudflare官网，自然也是使用自家cdn，另外一家是台湾省的一个网站，域名指向的ip一般也是比较好的线路。
 
